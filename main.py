@@ -1,21 +1,13 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from time import sleep
+from instapy import InstaPy
 
-driver = webdriver.Firefox()
-wait = WebDriverWait(driver, 10)
-driver.maximize_window()
+session = InstaPy(username="mr.percys_palace", password="")
+session.login()
+session.like_by_tags(["travel", "adventure", "europe", "jellycat"], amount=5)
+session.set_do_follow(True, percentage=50)
+session.set_do_comment(True, percentage=50)
+session.set_comments(["Nice photo!", "<3", "Beautiful :heart_eyes:", "Follow me back!"])
+session.set_relationship_bounds(enabled=True, max_followers=8500)
 
-driver.get('https://www.instagram.com/')
+session.set_quota_supervisor(enabled=True, peak_comments_daily=240, peak_comments_hourly=21)
 
-wait.until(ec.element_to_be_clickable((By.NAME, "username"))).send_keys("mr.percys_palace")
-el = wait.until(ec.element_to_be_clickable((By.NAME, "password")))
-el.send_keys("D3arpercy")
-el.send_keys(Keys.ENTER)
-
-sleep(5)
-
-driver.close()
+session.end()
